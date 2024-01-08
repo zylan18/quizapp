@@ -2,7 +2,11 @@ package com.telusko.quizapp.controller;
 
 import com.telusko.quizapp.model.Question;
 import com.telusko.quizapp.service.QuestionService;
+
+import net.sf.jasperreports.engine.JRException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +33,8 @@ public class QuestionController {
 		return questionService.getQuestionsByCategory(category);
 	}
 	
-	@PostMapping("add")
-	public ResponseEntity<String>  addQuestion(@RequestBody Question question) {
-		return questionService.addQuestion(question);
+	@PostMapping(value = "/report")
+	private String printReport() throws JRException, ClassNotFoundException {
+	    return questionService.dynamicReportBuilder();
 	}
 }
